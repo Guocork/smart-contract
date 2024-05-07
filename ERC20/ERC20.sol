@@ -4,18 +4,27 @@ pragma solidity >=0.7.0 <0.9.0;
 import "./IERC20.sol";
 
 contract ERC20 is IERC20 {
+    
+    // 实现接口中的 balanceOf() 方法 这里是将接口中的方法使用状态变量的方法重写 因为solidity默认为pubilc关键字修饰的状态变量设置了getter方法
+    // 如果要按照接口中的定义进行设定 则需要对每个方法进行getter的实现 此时只需要把变量状态设置成private即可 调用者通过getter方法来访问状态变量里的值
+    // 这里需要注意的是 由于solidity支持函数和状态变量具有相同的名称 所以这里使用状态变量重写了原接口中定义的函数
     mapping(address => uint256) public override balanceOf; // 默认实现getter方法
 
+    // 同上一个状态变量
     mapping(address => mapping(address => uint256)) public override allowance; // 默认实现getter方法
 
+    // 同上一个状态变量
     uint256 public override totalSupply;  // 默认实现getter方法
 
-    string public name;  // 发行代币的名称
+    // 发行代币的名称
+    string public name;  
 
-    string public symbol; // 一个代号 类似于ETH、USDT
+    // 一个代号 类似于ETH、USDT
+    string public symbol; 
 
     uint8 public decimals = 18;
 
+    // 构造器 合约部署时候 进行初始化 设定代币的名称以及代号
     constructor(string memory name_, string memory symbol_) {  // 构建的时候要输入代币名称 代币symbol
         name = name_;
         symbol = symbol_;
@@ -47,8 +56,8 @@ contract ERC20 is IERC20 {
 
     // 铸造代币的函数 这个不在标准中 这里写成函数的形式 任何人可以铸造代币 但是实际应用中会设置权限只有owner可以铸造 比如可以写进构造函数里
     function mint(uint amount) external {
-        balanceOf[msg.sender] += amount;
-        totalSupply += amount;
+        balanceOf[msg.sender] += amount;  // 这里有一个点 铸造的代币是放到该函数调用者的账户地址上 合约上不存在代币 
+        totalSupply += amount;            // 这里totalSupply 这个变量只是用来记录代币的数量 代币的实际数量由各个账户的余额累加而成，而 totalSupply 只是一个元数据，用来提供关于代币总量的信息。
         /**
           这里触发Transfer函数有几个目的：
           1. 透明性和追溯性： 通过触发 Transfer 事件，可以记录代币的流动，即使是增发操作也可以被记录下来，这有助于提高合约操作的透明度，并允许用户追溯代币的发行情况。

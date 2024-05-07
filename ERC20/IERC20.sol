@@ -1,3 +1,7 @@
+/**
+    这是ERC20 接口 IERC20 的内容
+ */
+
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.20;
