@@ -96,3 +96,13 @@ contract Airdrop {
     所以，无论地址是否使用 payable 关键字修饰，都可以调用 transfer 方法来发送以太币。
     但是，只有使用 payable 关键字修饰的地址才能够接收以太币。
  */
+
+
+ //  举一反三(solidity中地址类型的内置函数)
+ /**
+    1. transfer(uint256 amount) payable: 向地址发送指定数量的以太币。如果发送失败（例如，接收方地址没有足够的 gas、没有实现接收以太币的接收函数等），则会抛出异常，交易会回滚。
+    2. send(uint256 amount) returns (bool): 与 transfer 类似，用于向地址发送指定数量的以太币。不过，不会抛出异常，而是返回一个布尔值，表示发送是否成功。如果发送失败，返回 false；如果发送成功，返回 true。
+    3. balance: 返回地址的以太币余额（单位为 Wei）。
+    4. transferFrom(address sender, uint256 amount) internal: 内部函数，用于合约内部转移以太币。这个函数在 Solidity 的低版本中存在，但在较新的版本中已被废弃，推荐使用 transfer 或 send。
+    5. call():address类型的低级成员函数，它用来与其他合约交互。它的返回值为(bool, data)，分别对应call是否成功以及目标函数的返回值。
+  */
