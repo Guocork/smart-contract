@@ -10,10 +10,10 @@ contract ERC20 is IERC20 {
     // 这里需要注意的是 由于solidity支持函数和状态变量具有相同的名称 所以这里使用状态变量重写了原接口中定义的函数
     mapping(address => uint256) public override balanceOf; // 默认实现getter方法
 
-    // 同上一个状态变量
+    // 授权的地址信息 同上一个状态变量
     mapping(address => mapping(address => uint256)) public override allowance; // 默认实现getter方法
 
-    // 同上一个状态变量
+    // 发行的代币总量 同上一个状态变量
     uint256 public override totalSupply;  // 默认实现getter方法
 
     // 发行代币的名称
