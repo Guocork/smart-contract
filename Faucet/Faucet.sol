@@ -43,11 +43,13 @@ contract Faucet {
         //  创建IERC20合约对象
         IERC20 token = IERC20(tokenContract);
 
-        // 看看代币数量够不够分发
+        // 看看代币数量够不够分发 这里看的是当前Faucet 合约中的代币够不够发 发之前要给这个合约转入一定的代币
         require(token.balanceOf(address(this)) >= amountAllowed, "Faucet Empty!");
 
         // 发送token
-        token.transfer(msg.sender, amountAllowed);
+        // 这里注意传入参数的msg.sender 与函数tranfer 中的msg.sender 不一样 因为调用两个函数的地址不一样 
+        // 所以参数msg.sender是调用requestTokens方法的地址 而transfer函数中的 msg.sender 是调用tranfer函数的地址 这里是Faucet合约
+        token.transfer(msg.sender, amountAllowed);  
 
         // 记录领取地址
         requestedAddress[msg.sender] = true;
