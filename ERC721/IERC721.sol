@@ -4,7 +4,12 @@ pragma solidity >=0.7.0 <0.9.0;
 /**
  *   ERC721标准接口
  */
+
+import "./IERC165.sol";
+
+
 interface IERC721 is IERC165 {
+
     event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);
     event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId);
     event ApprovalForAll(address indexed owner, address indexed operator, bool approved);
