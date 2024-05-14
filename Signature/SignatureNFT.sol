@@ -10,7 +10,7 @@ import "../ERC721/ERC721.sol";
 library ECDSA{
     /**
      * @dev 通过ECDSA，验证签名地址是否正确，如果正确则返回true
-     * _msgHash为消息的hash
+     * _msgHash为消息的hash 
      * _signature为签名
      * _signer为签名地址
      */
@@ -60,7 +60,7 @@ library ECDSA{
 
 
 contract SignatureNFT is ERC721 {
-    address immutable public signer; // 签名地址
+    address immutable public signer; // 项目方签名地址。
     mapping(address => bool) public mintedAddress;   // 记录已经mint的地址
 
     // 构造函数，初始化NFT合集的名称、代号、签名地址
@@ -99,3 +99,8 @@ contract SignatureNFT is ERC721 {
         return ECDSA.verify(_msgHash, _signature, signer);
     }
 }
+
+/**
+    这里的底层逻辑是 用户铸造请求 发给项目后端后 项目方进行验证 验证完成之后 使用私钥签名
+    返回给用户 用户再将这一铸造要求发送给 智能合约 智能合约接受到请求后 会验证签名的有效性 之后进行铸造
+ */
